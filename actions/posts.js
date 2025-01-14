@@ -9,7 +9,6 @@ export async function createPost(prevState, formData) {
   const title = formData.get('title');
   const image = formData.get('image');
   const content = formData.get('content');
-  console.log(image);
   let errors = [];
 
   if (!title || title.trim().length === 0) {
@@ -43,11 +42,11 @@ export async function createPost(prevState, formData) {
     content,
     userId: 1,
   });
-
+  revalidatePath('/feed');
   redirect('/feed');
 }
 
 export async function togglePostLikeStatus(postId) {
   await updatePostLikeStatus(postId, 2);
-  revalidatePath('/', 'layout');
+  revalidatePath('/feed');
 }
